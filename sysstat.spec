@@ -1,5 +1,5 @@
 %define	name	sysstat
-%define version 7.0.3
+%define version 7.1.3
 %define release %mkrel 1
 
 Name: 		%name
@@ -24,6 +24,7 @@ They enable system monitoring of disk, network, and other IO activity.
 %setup -q
 
 %build
+%configure
 make CFLAGS="$RPM_OPT_FLAGS" \
 	PREFIX="%{_prefix}" \
 	SA_LIB_DIR="%{_libdir}/sa" \
@@ -78,10 +79,9 @@ rm -rf %{buildroot}
 %attr(755,root,root) %config(noreplace) /etc/cron.hourly/sysstat
 %attr(755,root,root) %config(noreplace) /etc/cron.daily/sysstat
 %config(noreplace) %{_sysconfdir}/sysconfig/sysstat.ioconf
+%config(noreplace) %{_sysconfdir}/sysconfig/sysstat
 %{_bindir}/*
 %{_libdir}/sa
 %{_mandir}/man1/*
 %{_mandir}/man8/*
 /var/log/sa
-
-
