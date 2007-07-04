@@ -1,5 +1,5 @@
 %define	name	sysstat
-%define version 7.1.3
+%define version 7.1.5
 %define release %mkrel 1
 
 Name: 		%name
