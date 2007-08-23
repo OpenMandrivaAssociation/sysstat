@@ -11,8 +11,8 @@ Group: 		System/Configuration/Other
 URL: 		http://perso.wanadoo.fr/sebastien.godard
 Source: 	http://ibiblio.org/pub/Linux/system/status/%{name}-%{version}.tar.bz2
 Requires: 	kernel >= 2.2.16-21
-Requires(preun): sh-utils textutils grep fileutils
-Requires(postun): sh-utils textutils grep fileutils
+Requires(preun): coreutils grep
+Requires(postun): coreutils grep
 BuildRoot: 	%{_tmppath}/%{name}-root
 
 %description
