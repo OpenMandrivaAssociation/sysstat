@@ -13,6 +13,7 @@ Source: 	http://ibiblio.org/pub/Linux/system/status/%{name}-%{version}.tar.bz2
 Requires: 	kernel >= 2.2.16-21
 Requires(preun): coreutils grep
 Requires(postun): coreutils grep
+BuildRoot: 	%{_tmppath}/%{name}-root
 
 %description
 This package provides the sar and iostat commands for the Linux
