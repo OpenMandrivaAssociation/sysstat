@@ -1,6 +1,6 @@
 %define	name	sysstat
-%define version 7.1.6
-%define release %mkrel 3
+%define version 8.1.1
+%define release %mkrel 1
 
 Name: 		%name
 Version: 	%version
@@ -32,7 +32,10 @@ make CFLAGS="$RPM_OPT_FLAGS" \
 
 %install
 rm -rf %{buildroot}
+
 make MAN_DIR=%{_mandir} IGNORE_MAN_GROUP=y PREFIX=%{_prefix} DESTDIR=%{buildroot}  SA_LIB_DIR=%{_libdir}/sa install
+
+rm -fr %{buildroot}%{_datadir}/doc/%{name}-%{version}
 
 mkdir -p %{buildroot}/etc/{cron.daily,cron.hourly}
 
