@@ -1,6 +1,6 @@
 %define	name	sysstat
 %define version 8.1.3
-%define release %mkrel 1
+%define release %mkrel 2
 
 Name: 		%name
 Version: 	%version
@@ -23,7 +23,8 @@ They enable system monitoring of disk, network, and other IO activity.
 %setup -q
 
 %build
-%configure
+export sa_lib_dir=%{_libdir}/sa 
+%configure 
 make CFLAGS="$RPM_OPT_FLAGS" \
 	PREFIX="%{_prefix}" \
 	SA_LIB_DIR="%{_libdir}/sa" \
