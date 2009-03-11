@@ -1,5 +1,5 @@
 %define	name	sysstat
-%define version 8.1.6
+%define version 9.0.1
 %define release %mkrel 1
 
 Name: 		%name
@@ -10,6 +10,7 @@ License: 	GPL
 Group: 		System/Configuration/Other
 URL: 		http://perso.wanadoo.fr/sebastien.godard
 Source: 	http://ibiblio.org/pub/Linux/system/status/%{name}-%{version}.tar.bz2
+Patch0:		sysstat-9.0.1-strfmt.patch
 Requires(preun): coreutils grep
 Requires(postun): coreutils grep
 BuildRoot: 	%{_tmppath}/%{name}-root
@@ -21,6 +22,7 @@ They enable system monitoring of disk, network, and other IO activity.
 
 %prep
 %setup -q
+%patch0 -p1 -b .strfmt
 
 %build
 export sa_lib_dir=%{_libdir}/sa 
