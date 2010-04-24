@@ -1,12 +1,8 @@
-%define	name	sysstat
-%define version 9.1.1
-%define release %mkrel 1
-
-Name: 		%name
-Version: 	%version
-Release: 	%release
+Name: 		sysstat
+Version: 	9.1.1
+Release: 	%mkrel 2
 Summary: 	Includes the sar and iostat system monitoring commands
-License: 	GPL
+License: 	GPLv2
 Group: 		System/Configuration/Other
 URL: 		http://pagesperso-orange.fr/sebastien.godard/
 Source: 	http://pagesperso-orange.fr/sebastien.godard/%{name}-%{version}.tar.bz2
@@ -26,7 +22,7 @@ They enable system monitoring of disk, network, and other IO activity.
 
 %build
 export sa_lib_dir=%{_libdir}/sa 
-%configure 
+%configure2_5x 
 make CFLAGS="$RPM_OPT_FLAGS" \
 	PREFIX="%{_prefix}" \
 	SA_LIB_DIR="%{_libdir}/sa" \
@@ -72,7 +68,7 @@ fi
 %preun
 if [ "$1" = 0 ]; then
   # Remove sa logs if removing sysstat completely
-  rm -f /var/log/sa/*
+  rm -rf /var/log/sa/*
 fi
 
 %clean
@@ -81,8 +77,8 @@ rm -rf %{buildroot}
 %files -f %{name}.lang
 %defattr(-,root,root)
 %doc CHANGES COPYING CREDITS README TODO sysstat-%version.lsm
-%attr(755,root,root) %config(noreplace) /etc/cron.hourly/sysstat
-%attr(755,root,root) %config(noreplace) /etc/cron.daily/sysstat
+%attr(755,root,root) %config(noreplace) %{_sysconfdir}/cron.hourly/sysstat
+%attr(755,root,root) %config(noreplace) %{_sysconfdir}/cron.daily/sysstat
 %config(noreplace) %{_sysconfdir}/sysconfig/sysstat.ioconf
 %config(noreplace) %{_sysconfdir}/sysconfig/sysstat
 %{_bindir}/*
