@@ -1,11 +1,11 @@
 Name: 		sysstat
-Version: 	9.1.1
-Release: 	%mkrel 2
+Version: 	9.1.3
+Release: 	%mkrel 1
 Summary: 	Includes the sar and iostat system monitoring commands
 License: 	GPLv2
 Group: 		System/Configuration/Other
 URL: 		http://pagesperso-orange.fr/sebastien.godard/
-Source: 	http://pagesperso-orange.fr/sebastien.godard/%{name}-%{version}.tar.bz2
+Source: 	http://pagesperso-orange.fr/sebastien.godard/%{name}-%{version}.tar.gz
 Patch0:		sysstat-9.0.1-strfmt.patch
 Requires(preun): coreutils grep
 Requires(postun): coreutils grep
