@@ -1,5 +1,5 @@
 Name: 		sysstat
-Version: 	9.0.6.1
+Version: 	9.6.1
 Release: 	%mkrel 1
 Summary: 	Includes the sar and iostat system monitoring commands
 License: 	GPLv2
