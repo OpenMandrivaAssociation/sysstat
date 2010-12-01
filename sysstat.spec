@@ -76,7 +76,6 @@ rm -rf %{buildroot}
 
 %files -f %{name}.lang
 %defattr(-,root,root)
-%doc CHANGES COPYING CREDITS README TODO sysstat-%version.lsm
 %attr(755,root,root) %config(noreplace) %{_sysconfdir}/cron.hourly/sysstat
 %attr(755,root,root) %config(noreplace) %{_sysconfdir}/cron.daily/sysstat
 %config(noreplace) %{_sysconfdir}/sysconfig/sysstat.ioconf
@@ -86,3 +85,9 @@ rm -rf %{buildroot}
 %{_mandir}/man1/*
 %{_mandir}/man8/*
 /var/log/sa
+%_datadir/doc/sysstat-9.0.6.1/CHANGES
+%_datadir/doc/sysstat-9.0.6.1/COPYING
+%_datadir/doc/sysstat-9.0.6.1/CREDITS
+%_datadir/doc/sysstat-9.0.6.1/FAQ
+%_datadir/doc/sysstat-9.0.6.1/README
+%_datadir/doc/sysstat-9.0.6.1/sysstat-9.0.6.1.lsm
