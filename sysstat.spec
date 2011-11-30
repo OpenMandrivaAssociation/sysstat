@@ -1,15 +1,14 @@
 Name: 		sysstat
-Version: 	9.6.1
-Release: 	%mkrel 1
+Version: 	10.0.3
+Release: 	1
 Summary: 	Includes the sar and iostat system monitoring commands
 License: 	GPLv2
 Group: 		System/Configuration/Other
 URL: 		http://pagesperso-orange.fr/sebastien.godard/
 Source: 	http://pagesperso-orange.fr/sebastien.godard/%{name}-%{version}.tar.gz
-Patch0:		sysstat-9.0.1-strfmt.patch
+Patch0:		sysstat-10.0.3-strfmt.patch
 Requires(preun): coreutils grep
 Requires(postun): coreutils grep
-BuildRoot: 	%{_tmppath}/%{name}-root
 
 %description
 This package provides the sar and iostat commands for the Linux
@@ -30,8 +29,6 @@ make CFLAGS="$RPM_OPT_FLAGS" \
 
 
 %install
-rm -rf %{buildroot}
-
 make MAN_DIR=%{_mandir} IGNORE_MAN_GROUP=y PREFIX=%{_prefix} DESTDIR=%{buildroot}  SA_LIB_DIR=%{_libdir}/sa install
 
 rm -fr %{buildroot}%{_datadir}/doc/%{name}-%{version}
@@ -71,9 +68,6 @@ if [ "$1" = 0 ]; then
   rm -rf /var/log/sa/*
 fi
 
-%clean
-rm -rf %{buildroot}
-
 %files -f %{name}.lang
 %defattr(-,root,root)
 %attr(755,root,root) %config(noreplace) %{_sysconfdir}/cron.hourly/sysstat
@@ -83,11 +77,6 @@ rm -rf %{buildroot}
 %{_bindir}/*
 %{_libdir}/sa
 %{_mandir}/man1/*
+%{_mandir}/man5/*
 %{_mandir}/man8/*
 /var/log/sa
-%_datadir/doc/sysstat-9.0.6.1/CHANGES
-%_datadir/doc/sysstat-9.0.6.1/COPYING
-%_datadir/doc/sysstat-9.0.6.1/CREDITS
-%_datadir/doc/sysstat-9.0.6.1/FAQ
-%_datadir/doc/sysstat-9.0.6.1/README
-%_datadir/doc/sysstat-9.0.6.1/sysstat-9.0.6.1.lsm
