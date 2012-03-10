@@ -1,11 +1,11 @@
 Name: 		sysstat
-Version: 	10.0.3
+Version: 	10.0.4
 Release: 	1
 Summary: 	Includes the sar and iostat system monitoring commands
 License: 	GPLv2
 Group: 		System/Configuration/Other
 URL: 		http://pagesperso-orange.fr/sebastien.godard/
-Source: 	http://pagesperso-orange.fr/sebastien.godard/%{name}-%{version}.tar.gz
+Source0: 	http://pagesperso-orange.fr/sebastien.godard/%{name}-%{version}.tar.gz
 Patch0:		sysstat-10.0.3-strfmt.patch
 Requires(preun): coreutils grep
 Requires(postun): coreutils grep
