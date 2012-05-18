@@ -1,11 +1,11 @@
-Name: 		sysstat
-Version: 	10.0.4
-Release: 	1
-Summary: 	Includes the sar and iostat system monitoring commands
-License: 	GPLv2
-Group: 		System/Configuration/Other
-URL: 		http://pagesperso-orange.fr/sebastien.godard/
-Source0: 	http://pagesperso-orange.fr/sebastien.godard/%{name}-%{version}.tar.gz
+Name:		sysstat
+Version:	10.0.5
+Release:	1
+Summary:	Includes the sar and iostat system monitoring commands
+License:	GPLv2
+Group:		System/Configuration/Other
+URL:		http://pagesperso-orange.fr/sebastien.godard/
+Source0:	http://pagesperso-orange.fr/sebastien.godard/%{name}-%{version}.tar.gz
 Patch0:		sysstat-10.0.3-strfmt.patch
 Requires(preun): coreutils grep
 Requires(postun): coreutils grep
@@ -69,7 +69,6 @@ if [ "$1" = 0 ]; then
 fi
 
 %files -f %{name}.lang
-%defattr(-,root,root)
 %attr(755,root,root) %config(noreplace) %{_sysconfdir}/cron.hourly/sysstat
 %attr(755,root,root) %config(noreplace) %{_sysconfdir}/cron.daily/sysstat
 %config(noreplace) %{_sysconfdir}/sysconfig/sysstat.ioconf
