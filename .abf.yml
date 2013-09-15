@@ -1,2 +1,4 @@
+removed_sources:
+  sysstat-10.0.5.tar.gz: e59ef29e9dea494e8eef7274e6f2336e2281eee9
 sources:
-  "sysstat-10.0.5.tar.gz": e59ef29e9dea494e8eef7274e6f2336e2281eee9
+  sysstat-10.1.7.tar.bz2: d5109e2b872baa23f1e551d7db465641019cd0c3
