@@ -9,6 +9,7 @@ Group: 		Monitoring
 URL: 		http://pagesperso-orange.fr/sebastien.godard/
 Source0: 	http://pagesperso-orange.fr/sebastien.godard/%{name}-%{version}.tar.xz
 Patch0:		sysstat-10.1.2-fix-format-errors.patch
+BuildRequires:	pkgconfig(systemd)
 
 %description
 This package provides the sar and iostat commands for the Linux
@@ -23,8 +24,9 @@ mv CREDITS.aux CREDITS
 
 %build
 %setup_compile_flags
-export sa_lib_dir=%{_libdir}/sa 
+export sa_lib_dir=%{_libdir}/sa
 %configure2_5x --enable-debuginfo
+
 make CFLAGS="%optflags" \
 	PREFIX="%{_prefix}" \
 	SA_LIB_DIR="%{_libdir}/sa" \
