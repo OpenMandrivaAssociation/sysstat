@@ -1,13 +1,13 @@
 %define	debug_package	%nil
 
 Name: 		sysstat
-Version: 	10.1.7
+Version: 	10.2.1
 Release: 	1
 Summary: 	Includes the sar and iostat system monitoring commands
 License: 	GPLv2
 Group: 		Monitoring
 URL: 		http://pagesperso-orange.fr/sebastien.godard/
-Source0: 	http://pagesperso-orange.fr/sebastien.godard/%{name}-%{version}.tar.bz2
+Source0: 	http://pagesperso-orange.fr/sebastien.godard/%{name}-%{version}.tar.xz
 Patch0:		sysstat-10.1.2-fix-format-errors.patch
 
 %description
