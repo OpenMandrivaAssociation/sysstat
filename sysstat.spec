@@ -25,7 +25,7 @@ mv CREDITS.aux CREDITS
 %build
 %setup_compile_flags
 export sa_lib_dir=%{_libdir}/sa
-%configure2_5x --enable-debuginfo
+%configure --enable-debuginfo
 
 make CFLAGS="%optflags" \
 	PREFIX="%{_prefix}" \
