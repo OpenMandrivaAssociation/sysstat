@@ -1,8 +1,8 @@
 %define	debug_package	%nil
 
 Name: 		sysstat
-Version: 	10.2.1
-Release: 	2
+Version: 	11.3.1
+Release: 	1
 Summary: 	Includes the sar and iostat system monitoring commands
 License: 	GPLv2
 Group: 		Monitoring
@@ -77,7 +77,7 @@ if [[ $1 -eq 0 ]]; then
 fi
 
 %files -f %{name}.lang
-%doc CHANGES COPYING CREDITS FAQ README
+%doc CHANGES COPYING CREDITS FAQ
 %config(noreplace) %{_sysconfdir}/cron.hourly/sysstat
 %config(noreplace) %{_sysconfdir}/cron.daily/sysstat
 %config(noreplace) %{_sysconfdir}/sysconfig/sysstat.ioconf
