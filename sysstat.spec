@@ -1,7 +1,7 @@
-%define	debug_package	%nil
+#% define	debug_package	%nil
 
 Name: 		sysstat
-Version: 	11.3.1
+Version: 	11.5.4
 Release: 	1
 Summary: 	Includes the sar and iostat system monitoring commands
 License: 	GPLv2
@@ -10,6 +10,7 @@ URL: 		http://pagesperso-orange.fr/sebastien.godard/
 Source0: 	http://pagesperso-orange.fr/sebastien.godard/%{name}-%{version}.tar.xz
 Patch0:		sysstat-10.1.2-fix-format-errors.patch
 BuildRequires:	pkgconfig(systemd)
+BuildRequires:	lm_sensors-devel
 
 %description
 This package provides the sar and iostat commands for the Linux
@@ -25,16 +26,19 @@ mv CREDITS.aux CREDITS
 %build
 %setup_compile_flags
 export sa_lib_dir=%{_libdir}/sa
-%configure --enable-debuginfo
+%configure --enable-debuginfo \
+	--disable-file-attr \
+	--enable-copy-only \
+	--disable-stripping
 
-make CFLAGS="%optflags" \
+%make CFLAGS="%optflags" \
 	PREFIX="%{_prefix}" \
 	SA_LIB_DIR="%{_libdir}/sa" \
 	MAN_DIR="%{_mandir}"
 
 
 %install
-make MAN_DIR=%{_mandir} IGNORE_MAN_GROUP=y PREFIX=%{_prefix} DESTDIR=%{buildroot}  SA_LIB_DIR=%{_libdir}/sa install
+make MAN_DIR=%{_mandir} IGNORE_MAN_GROUP=y PREFIX=%{_prefix} DESTDIR=%{buildroot}  SA_LIB_DIR=%{_libdir}/sa install CHOWN=true
 
 # Install service file
 mkdir -p %{buildroot}%{_unitdir}
