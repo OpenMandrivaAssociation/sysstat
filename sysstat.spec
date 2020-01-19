@@ -1,14 +1,13 @@
 #% define	debug_package	%nil
 
 Name: 		sysstat
-Version: 	11.5.4
-Release: 	1
+Version:	12.3.1
+Release:	1
 Summary: 	Includes the sar and iostat system monitoring commands
 License: 	GPLv2
 Group: 		Monitoring
 URL: 		http://pagesperso-orange.fr/sebastien.godard/
 Source0: 	http://pagesperso-orange.fr/sebastien.godard/%{name}-%{version}.tar.xz
-Patch0:		sysstat-10.1.2-fix-format-errors.patch
 BuildRequires:	pkgconfig(systemd)
 BuildRequires:	lm_sensors-devel
 
@@ -18,20 +17,19 @@ operating system, similar to their traditional UNIX counterparts.
 They enable system monitoring of disk, network, and other IO activity.
 
 %prep
-%setup -q
-%patch0 -p1 -b .strfmt
+%autosetup
 iconv -f windows-1252 -t utf8 CREDITS > CREDITS.aux
 mv CREDITS.aux CREDITS
 
 %build
-%setup_compile_flags
+%set_build_flags
 export sa_lib_dir=%{_libdir}/sa
 %configure --enable-debuginfo \
 	--disable-file-attr \
 	--enable-copy-only \
 	--disable-stripping
 
-%make CFLAGS="%optflags" \
+%make_build CFLAGS="%optflags" \
 	PREFIX="%{_prefix}" \
 	SA_LIB_DIR="%{_libdir}/sa" \
 	MAN_DIR="%{_mandir}"
@@ -81,7 +79,7 @@ if [[ $1 -eq 0 ]]; then
 fi
 
 %files -f %{name}.lang
-%doc CHANGES COPYING CREDITS FAQ
+%doc CHANGES COPYING CREDITS
 %config(noreplace) %{_sysconfdir}/cron.hourly/sysstat
 %config(noreplace) %{_sysconfdir}/cron.daily/sysstat
 %config(noreplace) %{_sysconfdir}/sysconfig/sysstat.ioconf
