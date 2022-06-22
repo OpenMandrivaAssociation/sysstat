@@ -2,7 +2,7 @@
 
 Name: 		sysstat
 Version:	12.3.1
-Release:	1
+Release:	2
 Summary: 	Includes the sar and iostat system monitoring commands
 License: 	GPLv2
 Group: 		Monitoring
