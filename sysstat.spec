@@ -1,8 +1,8 @@
 #% define	debug_package	%nil
 
 Name: 		sysstat
-Version:	12.3.1
-Release:	2
+Version:	12.6.2
+Release:	1
 Summary: 	Includes the sar and iostat system monitoring commands
 License: 	GPLv2
 Group: 		Monitoring
