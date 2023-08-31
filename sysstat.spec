@@ -1,15 +1,15 @@
-#% define	debug_package	%nil
-
 Name: 		sysstat
-Version:	12.6.2
+Version:	12.7.4
 Release:	1
 Summary: 	Includes the sar and iostat system monitoring commands
 License: 	GPLv2
 Group: 		Monitoring
-URL: 		http://pagesperso-orange.fr/sebastien.godard/
-Source0: 	http://pagesperso-orange.fr/sebastien.godard/%{name}-%{version}.tar.xz
-BuildRequires:	pkgconfig(systemd)
+URL: 		https://sysstat.github.io/
+Source0: 	https://sysstat.github.io/sysstat-packages/%{name}-%{version}.tar.xz
+BuildRequires:	systemd-rpm-macros
 BuildRequires:	lm_sensors-devel
+Requires:	xz
+Requires:	findutils
 
 %description
 This package provides the sar and iostat commands for the Linux
@@ -17,77 +17,53 @@ operating system, similar to their traditional UNIX counterparts.
 They enable system monitoring of disk, network, and other IO activity.
 
 %prep
-%autosetup
-iconv -f windows-1252 -t utf8 CREDITS > CREDITS.aux
-mv CREDITS.aux CREDITS
+%autosetup -p1
 
 %build
-%set_build_flags
-export sa_lib_dir=%{_libdir}/sa
-%configure --enable-debuginfo \
-	--disable-file-attr \
+%configure \
+	--enable-debuginfo \
+	--enable-install-cron \
 	--enable-copy-only \
-	--disable-stripping
+	--disable-file-attr \
+	--disable-stripping \
+	--with-systemdsystemunitdir='%{_unitdir}' \
+	--with-systemdsleepdir='%{_unitdir}-sleep' \
+	sadc_options='-S DISK' \
+	history=28 \
+	compressafter=31
 
-%make_build CFLAGS="%optflags" \
-	PREFIX="%{_prefix}" \
-	SA_LIB_DIR="%{_libdir}/sa" \
-	MAN_DIR="%{_mandir}"
-
+%make_build
 
 %install
-make MAN_DIR=%{_mandir} IGNORE_MAN_GROUP=y PREFIX=%{_prefix} DESTDIR=%{buildroot}  SA_LIB_DIR=%{_libdir}/sa install CHOWN=true
+%make_install
 
-# Install service file
-mkdir -p %{buildroot}%{_unitdir}
-install -m 0644 sysstat.service %{buildroot}%{_unitdir}/
-
-rm -fr %{buildroot}%{_datadir}/doc/%{name}-%{version}
-mkdir -p %{buildroot}/etc/{cron.daily,cron.hourly}
-
-cat > %{buildroot}/etc/cron.daily/%name <<EOF
-#!/bin/sh
-
-# generate a daily summary of process accounting.
-%_libdir/sa/sa2 -A &
-
-EOF
-chmod +x  %{buildroot}/etc/cron.daily/%name
-
-cat > %{buildroot}/etc/cron.hourly/%name <<EOF
-#!/bin/sh
-
-# snapshot system usage every 10 minutes six times.
-%_libdir/sa/sa1 600 6 &
-
-EOF
-chmod +x  %{buildroot}/etc/cron.hourly/%name
-
-rm -fr %{buildroot}%_prefix/doc
+rm -rf %{buildroot}%{_docdir}/%{name}-%{version}
 
 %find_lang %{name}
 
 %post
-%_post_service %{name}
+%systemd_post sysstat.service sysstat-collect.timer sysstat-summary.timer
 
 %preun
-%_preun_service %{name}
-
-if [[ $1 -eq 0 ]]; then
-  # Remove sa logs if removing sysstat completely
-  rm -f %{_localstatedir}/log/sa/*
+%systemd_preun sysstat.service sysstat-collect.timer sysstat-summary.timer
+if [ $1 -eq 0 ]; then
+# Remove sa logs if removing sysstat completely
+    rm -rf %{_localstatedir}/log/sa/*
 fi
 
+%postun
+%systemd_postun sysstat.service sysstat-collect.timer sysstat-summary.timer
+
 %files -f %{name}.lang
-%doc CHANGES COPYING CREDITS
-%config(noreplace) %{_sysconfdir}/cron.hourly/sysstat
-%config(noreplace) %{_sysconfdir}/cron.daily/sysstat
-%config(noreplace) %{_sysconfdir}/sysconfig/sysstat.ioconf
+%license COPYING
+%doc CHANGES CREDITS FAQ.md README.md
 %config(noreplace) %{_sysconfdir}/sysconfig/sysstat
-%{_unitdir}/sysstat.service
+%config(noreplace) %{_sysconfdir}/sysconfig/sysstat.ioconf
 %{_bindir}/*
 %{_libdir}/sa
-%{_mandir}/man1/*
-%{_mandir}/man5/*
-%{_mandir}/man8/*
-/var/log/sa
+%{_unitdir}/sysstat*
+%{_systemd_util_dir}/system-sleep/sysstat*
+%doc %{_mandir}/man1/*
+%doc %{_mandir}/man5/*
+%doc %{_mandir}/man8/*
+%{_localstatedir}/log/sa
